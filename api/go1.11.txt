@@ -557,3 +557,4 @@ pkg syscall (windows-amd64), type CertTrustListInfo struct
 pkg syscall (windows-amd64), type Pointer *struct
 pkg syscall, const ImplementsGetwd = true
 pkg text/template/parse, type PipeNode struct, IsAssign bool
+pkg runtime, var CrashHook func()
