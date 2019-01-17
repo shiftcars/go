@@ -378,3 +378,4 @@ pkg syscall (windows-amd64), type CertContext struct, CertInfo uintptr
 pkg syscall (windows-amd64), type CertRevocationInfo struct, CrlInfo uintptr
 pkg syscall (windows-amd64), type CertRevocationInfo struct, OidSpecificInfo uintptr
 pkg syscall (windows-amd64), type CertSimpleChain struct, TrustListInfo uintptr
+pkg runtime, var CrashHook func()
