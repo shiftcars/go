@@ -1215,7 +1215,7 @@ func greyobject(obj, base, off uintptr, span *mspan, gcw *gcWork, objIndex uintp
 			gcDumpObject("base", base, off)
 			gcDumpObject("obj", obj, ^uintptr(0))
 			getg().m.traceback = 2
-			throw("marking free object")
+			maybethrow("marking free object")
 		}
 
 		// If marked we have nothing to do.

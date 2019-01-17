@@ -396,7 +396,7 @@ func findObject(p, refBase, refOff uintptr) (base uintptr, s *mspan, objIndex ui
 				gcDumpObject("object", refBase, refOff)
 			}
 			getg().m.traceback = 2
-			throw("found bad pointer in Go heap (incorrect use of unsafe or cgo?)")
+			maybethrow("found bad pointer in Go heap (incorrect use of unsafe or cgo?)")
 		}
 		return
 	}

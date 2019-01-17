@@ -594,6 +594,18 @@ func sync_throw(s string) {
 	throw(s)
 }
 
+var CrashHook func()
+
+func maybethrow(s string) {
+	if CrashHook == nil {
+		throw(s)
+	}
+	systemstack(func() {
+		print("fatal error: ", s, "\n")
+	})
+	CrashHook()
+}
+
 //go:nosplit
 func throw(s string) {
 	// Everything throw does should be recursively nosplit so it

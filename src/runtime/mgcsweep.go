@@ -295,7 +295,8 @@ func (s *mspan) sweep(preserve bool) bool {
 	nfreed := s.allocCount - nalloc
 	if nalloc > s.allocCount {
 		print("runtime: nelems=", s.nelems, " nalloc=", nalloc, " previous allocCount=", s.allocCount, " nfreed=", nfreed, "\n")
-		throw("sweep increased allocation count")
+		maybethrow("sweep increased allocation count")
+		return false
 	}
 
 	s.allocCount = nalloc
