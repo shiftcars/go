@@ -296,7 +296,6 @@ func (s *mspan) sweep(preserve bool) bool {
 	if nalloc > s.allocCount {
 		print("runtime: nelems=", s.nelems, " nalloc=", nalloc, " previous allocCount=", s.allocCount, " nfreed=", nfreed, "\n")
 		maybethrow("sweep increased allocation count")
-		return false
 	}
 
 	s.allocCount = nalloc
@@ -319,7 +318,7 @@ func (s *mspan) sweep(preserve bool) bool {
 	// But we need to set it before we make the span available for allocation
 	// (return it to heap or mcentral), because allocation code assumes that a
 	// span is already swept if available for allocation.
-	if freeToHeap || nfreed == 0 {
+	if freeToHeap || nfreed <= 0 {
 		// The span must be in our exclusive ownership until we update sweepgen,
 		// check for potential races.
 		if s.state != mSpanInUse || s.sweepgen != sweepgen-1 {
