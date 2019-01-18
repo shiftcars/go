@@ -601,7 +601,9 @@ func maybethrow(s string) {
 		throw(s)
 	}
 	systemstack(func() {
+		out := setGCPercentNoWait(-1)
 		print("fatal error: ", s, "\n")
+		print("runtime: disabled GC, old =", out, "\n")
 	})
 	CrashHook()
 }
