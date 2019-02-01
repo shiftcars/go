@@ -218,7 +218,8 @@ func gcenable() {
 	memstats.enablegc = true // now that runtime is initialized, GC is okay
 }
 
-func setGCPercentNoWait(in int32) (out int32) {
+//go:linkname setGCPercent runtime/debug.setGCPercent
+func setGCPercent(in int32) (out int32) {
 	lock(&mheap_.lock)
 	out = gcpercent
 	if in < 0 {
@@ -229,12 +230,7 @@ func setGCPercentNoWait(in int32) (out int32) {
 	// Update pacing in response to gcpercent change.
 	gcSetTriggerRatio(memstats.triggerRatio)
 	unlock(&mheap_.lock)
-	return out
-}
 
-//go:linkname setGCPercent runtime/debug.setGCPercent
-func setGCPercent(in int32) (out int32) {
-	out = setGCPercentNoWait(in)
 	// If we just disabled GC, wait for any concurrent GC mark to
 	// finish so we always return with no GC running.
 	if in < 0 {
